@@ -59,27 +59,27 @@
 		
 		var get = function(params) {
 			if (! params.radius) { params.radius = radius_start; }
-			console.log('Our radius: '+params.radius);
+			console.log('Our search radius: '+params.radius);
 			var url = base_url+'&location='+params.lat+','+params.lon+'&location-radius='+params.radius+'km';
 			
 			$.get(url,{},function(data){
-				console.log('get');
+				
 				if (typeof(data)=='object') {
-					console.log('object');
+				
 					if (data.feed) {
-						console.log('feed');
+				
 						if (data.feed.entry && data.feed.entry.length) {
-							console.log('entry found');
+							
 							params.callback(data.feed.entry[0]);
 						} else {
-							console.log('no entry found');
+							
 							// We haven't found any videos within our radius. Double the radius and try again.
 							params.radius *= 2;
 							if (params.radius >= radius_cutoff) {
 								alert(messages.no_videos_found);	
 								console.log(data);
 							} else {
-								console.log('continue to get');
+								
 								get(params);	
 							}
 						}
