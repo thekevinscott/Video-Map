@@ -1,11 +1,10 @@
-var codeAddress;
 (function(){
 
 	var geocoder;
 	var map;
 	
 	geocoder = new google.maps.Geocoder();
-	codeAddress = function(params) {
+	videomap.codeAddress = function(params) {
 		
 		var latlng = new google.maps.LatLng(params.lat, params.lon);
 		console.log(latlng);

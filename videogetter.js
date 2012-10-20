@@ -1,6 +1,5 @@
-var videogetter;
 (function($){
-	videogetter = function() {
+	videomap.videogetter = function() {
 		var yt_key = 'AI39si5L5vjhQIEHX5djKr_V6TxvyTGEaubSklcGdph3tkNjH7KwrTAcmQ7X4ZqZy-lvdRpMhCYa73ZTqLmu6ZUE9vHk3LjRvg';	
 		var orderby = 'viewCount';
 		var base_url = 'https://gdata.youtube.com/feeds/api/videos?key='+yt_key+'&alt=json&orderby='+orderby;
