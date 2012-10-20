@@ -8,6 +8,7 @@ var videogetter;
 		var radius_start = 10;
 		var video_target = $('#video');
 		var address_target = $('#address');
+		var views_target = $('#views');
 
 
 		var messages = {
@@ -29,7 +30,7 @@ var videogetter;
 						params.lon = video_geo_info[1];
 					}
 					
-					displayInfo(params);
+					displayInfo(params,video);
 					displayVideo(video_target,video_id);
 				} else {
 					alert(messages.no_video_id_found);
@@ -37,10 +38,16 @@ var videogetter;
 			}
 			get(params);
 		}
-		var displayInfo = function(params) {
+		var displayInfo = function(params,video) {
 			params.callback = function(address) {
 				if (! address) { address = messages.address_not_found; }
 				$(address_target).html(address);
+				
+				if (video && video['yt$statistics'] && video['yt$statistics']['viewCount']) {
+			
+					$(views_target).html('Views: ' + video['yt$statistics']['viewCount']);	
+				}
+				
 			}
 			codeAddress(params);
 		}
