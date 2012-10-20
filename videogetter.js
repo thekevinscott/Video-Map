@@ -19,8 +19,16 @@ var videogetter;
 
 		var updateVideo = function(params) {
 			params.callback = function(video) {
+				console.log(video);
 				if (video && video.id) {
 					var video_id = video.id['$t'].split('/').pop();
+					
+					if (video['georss$where'] && video['georss$where']['gml$Point'] && video['georss$where']['gml$Point']['gml$pos'] && video['georss$where']['gml$Point']['gml$pos']['$t']) {
+						var video_geo_info = video['georss$where']['gml$Point']['gml$pos']['$t'].split(' ');
+						params.lat = video_geo_info[0];
+						params.lon = video_geo_info[1];
+					}
+					
 					displayInfo(params);
 					displayVideo(video_target,video_id);
 				} else {
@@ -32,14 +40,13 @@ var videogetter;
 		var displayInfo = function(params) {
 			params.callback = function(address) {
 				if (! address) { address = messages.address_not_found; }
-				console.log(address);
 				$(address_target).html(address);
 			}
 			codeAddress(params);
 		}
 
 		var displayVideo = function(element,id) {
-			var iframe = '<iframe class="youtube-player" type="text/html" src="http://www.youtube.com/embed/'+id+'" frameborder="0">';
+			var iframe = '<iframe class="youtube-player" type="text/html" src="http://www.youtube.com/embed/'+id+'?autoplay=1" frameborder="0">';
 			$(element).html(iframe);
 
 		}

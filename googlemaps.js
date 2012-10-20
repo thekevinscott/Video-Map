@@ -6,9 +6,9 @@ var codeAddress;
 	
 	geocoder = new google.maps.Geocoder();
 	codeAddress = function(params) {
-		var lat = parseFloat(params.lat);
-		var lng = parseFloat(params.lng);
-		var latlng = new google.maps.LatLng(lat, lng);
+		
+		var latlng = new google.maps.LatLng(params.lat, params.lon);
+		console.log(latlng);
 		geocoder.geocode({'latLng': latlng},function(results, status) {
 	    if (status == google.maps.GeocoderStatus.OK) {
 	    	var result; 
@@ -21,7 +21,8 @@ var codeAddress;
 	    	}
 	    	params.callback(result);
 	    } else {
-	      alert('Geocode was not successful for the following reason: ' + status);
+	    	params.callback(result);
+	      //alert('Geocode was not successful for the following reason: ' + status);
 	    }
 	  });
 	}
