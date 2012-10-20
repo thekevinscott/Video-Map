@@ -7,18 +7,21 @@ var videogetter;
 		var radius_cutoff = 1000;
 		var radius_start = 10;
 		var video_target = $('#video');
+		var address_target = $('#address');
+
 
 		var messages = {
 			'youtube_error' : 'Youtube Error',
 			'no_videos_found' : 'No videos found',
-			'no_video_id_found' : 'No Video ID found'
+			'no_video_id_found' : 'No Video ID found',
+			'address_not_found' : 'Somewhere'
 		};
 
 		var updateVideo = function(params) {
 			params.callback = function(video) {
 				if (video && video.id) {
 					var video_id = video.id['$t'].split('/').pop();
-					
+					displayInfo(params);
 					displayVideo(video_target,video_id);
 				} else {
 					alert(messages.no_video_id_found);
@@ -26,10 +29,19 @@ var videogetter;
 			}
 			get(params);
 		}
+		var displayInfo = function(params) {
+			params.callback = function(address) {
+				if (! address) { address = messages.address_not_found; }
+				console.log(address);
+				$(address_target).html(address);
+			}
+			codeAddress(params);
+		}
 
 		var displayVideo = function(element,id) {
 			var iframe = '<iframe class="youtube-player" type="text/html" src="http://www.youtube.com/embed/'+id+'" frameborder="0">';
 			$(element).html(iframe);
+
 		}
 		
 		var get = function(params) {
@@ -71,8 +83,6 @@ var videogetter;
 			});
 		}
 		return {
-			get : get,
-			displayVideo : displayVideo,
 			updateVideo : updateVideo
 		}
 	}();
