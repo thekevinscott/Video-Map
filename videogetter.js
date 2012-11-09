@@ -1,5 +1,6 @@
 (function($){
 	videomap.videogetter = function() {
+	// videomap.videogetter.updateVideo({lat: 123, lon: Whatevs})
 		var yt_key = 'AI39si5L5vjhQIEHX5djKr_V6TxvyTGEaubSklcGdph3tkNjH7KwrTAcmQ7X4ZqZy-lvdRpMhCYa73ZTqLmu6ZUE9vHk3LjRvg';	
 		var orderby = 'viewCount';
 		var base_url = 'https://gdata.youtube.com/feeds/api/videos?key='+yt_key+'&alt=json&orderby='+orderby;
@@ -39,16 +40,28 @@
 		}
 		var displayInfo = function(params,video) {
 			params.callback = function(address) {
-				if (! address) { address = messages.address_not_found; }
+				// If the video doesn't have an address, then display a default message/ get an address from 
+				//  the latitude/longitide values we're searching by
+				if (! address) {
+					address = messages.address_not_found;
+				}
 				$(address_target).html(address);
 				
 				if (video && video['yt$statistics'] && video['yt$statistics']['viewCount']) {
 			
-					$(views_target).html('Views: ' + video['yt$statistics']['viewCount']);	
+					//$(views_target).html('Views: ' + video['yt$statistics']['viewCount']);	
+					$(views_target).html('Views: ' + commaSeparateNumber(video['yt$statistics']['viewCount']));	
 				}
 				
 			}
-			codeAddress(params);
+			videomap.codeAddress(params);
+		}
+		
+		function commaSeparateNumber(val){
+			while (/(\d+)(\d{3})/.test(val.toString())){
+			  val = val.toString().replace(/(\d+)(\d{3})/, '$1'+','+'$2');
+			}
+			return val;
 		}
 
 		var displayVideo = function(element,id) {
