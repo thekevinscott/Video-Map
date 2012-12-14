@@ -7,7 +7,7 @@
 		var lastAxes = {"x": 0, "y": 0};
 
 		// How many steps are included across our movement
-		var steps = {"x": 40, "y":30};
+		var steps = {"x": 40, "y":50};
 		// What are the bounding geographical coordinates of our region
 		var boundingCoordinates = { "top": 49, "bottom" : 33, "left" : -123, "right": -73};
 
@@ -77,7 +77,6 @@
 				if (Math.abs(axes.x - lastAxes.x) > (2 / steps.x)){
 					positionChanged = true;
 					lastAxes.x = axes.x; // Remember our value for next time
-					console.log("lastAxes.x: " + lastAxes.x);
 				}
 				if (Math.abs(axes.y - lastAxes.y) > (2 / steps.y)){
 					positionChanged = true;
@@ -93,7 +92,6 @@
 					var newLat = boundingCoordinates.bottom + ( normalizedY * (boundingCoordinates.top - boundingCoordinates.bottom));
 					var newLon = boundingCoordinates.left + ( normalizedX * (boundingCoordinates.right - boundingCoordinates.left));
 					videomap.videogetter.updateVideo({lat: newLat, lon: newLon});
-					console.log("newLon: " + newLon + ", newLat: " + newLat);
 				}
 				//$('#sidebar').html('0: ' + axes.x + ', 1 : ' + axes.y);
 			},
